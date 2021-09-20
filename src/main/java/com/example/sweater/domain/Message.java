@@ -26,7 +26,7 @@ public class Message {
         this.tag = tag;
     }
 
-    public String getAuthorName(){      // Чтобы взять имя автора, main.mustache обращается именно сюда
+    public String getAuthorName(){      // Чтобы взять имя автора, main.ftlh обращается именно сюда
         return author != null ? author.getUsername() : "<none>" ;
     }
     // До этого добавляли без автора, поэтому чтобы не было ошибок, будем проверять
