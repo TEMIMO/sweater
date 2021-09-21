@@ -17,6 +17,8 @@ public class Message {
     @JoinColumn(name = "user_id") // В базе данных author будет указан как user_id
     private User author;
 
+    private String filename;
+
     public Message(){
     }
 
@@ -61,5 +63,13 @@ public class Message {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

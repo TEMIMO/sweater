@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("{user}")
-    public String userEditForm(@PathVariable User user, Model model){
+    public String userEditForm(@PathVariable User user, Model model){ // PathVariable - для работы с параметром в адрее запроса (Для User user Spring намного умнее и понимают как брать User о ID)
         model.addAttribute("user", user);
         model.addAttribute("roles", Role.values());
         return "userEdit";
@@ -42,7 +42,9 @@ public class UserController {
 
         user.setUsername(username);
 
-        Set <String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
+        Set <String> roles = Arrays.stream(Role.values()).
+                map(Role::name).
+                collect(Collectors.toSet());
 
         user.getRoles().clear();
 
