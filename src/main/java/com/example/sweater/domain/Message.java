@@ -1,14 +1,18 @@
 package com.example.sweater.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 // Пакет домен для того, чтобы не искать сущности по всему исходному коду
 
 @Entity // Сущность, которую нам необходимо сохранять в базе данных
+@Table(name ="MESSAGE", schema = "PUBLIC")
 public class Message {
     @Id // Создаем первичный ключ
-    @GeneratedValue(strategy = GenerationType.AUTO) // Чтобы идентификаторы генерировались
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native") // Чтобы идентификаторы генерировались
+    @GenericGenerator(name = "native", strategy = "native")
+    private Long id;
 
     private String text;
     private String tag;
@@ -41,11 +45,11 @@ public class Message {
         this.author = author;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

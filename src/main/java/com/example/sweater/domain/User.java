@@ -1,5 +1,6 @@
 package com.example.sweater.domain;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -8,10 +9,11 @@ import java.util.Collection;
 import java.util.Set;
 
 @Entity
-@Table(name ="usr")
+@Table(name ="USR", schema = "PUBLIC")
 public class User implements UserDetails{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+    @GenericGenerator(name = "native", strategy = "native")
     private Long id;
 
     private String username;
