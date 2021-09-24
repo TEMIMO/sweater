@@ -1,2 +1,3 @@
 target/classes/application.properties
 .idea
+src/main/resources/db/migration/V2__Add_admin.sql
