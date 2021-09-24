@@ -23,7 +23,7 @@ public class User implements UserDetails{
     @NotBlank(message = "Password cannot be empty")
     private String password;
     @Transient // Не нужно брать данное поле из базы данных либо туда сохранять
-//    @NotBlank(message = "Confirmation cannot be empty")
+    @NotBlank(message = "Confirmation cannot be empty")
     private String password2;
     private boolean active;
 
