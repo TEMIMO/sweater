@@ -1,2 +1,2 @@
 # sweater
-Just Spring 
+Just Spring App 
