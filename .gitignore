@@ -1,4 +1,4 @@
-target/classes/application.properties
+target/
 .idea
 src/main/resources/db/migration/V2__Add_admin.sql
 src/main/resources/application.properties
