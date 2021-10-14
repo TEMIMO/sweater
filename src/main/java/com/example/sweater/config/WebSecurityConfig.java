@@ -22,7 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Bean // Чтобы инджектилось в разных местах проги
+    @Bean
     public PasswordEncoder getPasswordEncoder(){
         return new BCryptPasswordEncoder(8); //Надежность ключа шифрования
     }
@@ -30,8 +30,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().ignoringAntMatchers("/locationManipulator/post", "/rabbit");
+        http
                 .authorizeRequests()
-                .antMatchers("/", "/registration", "/static/**", "/activate/*").permitAll()
+                .antMatchers( "/", "/registration", "/static/**", "/activate/*", "/locationManipulator/post", "/locationManipulator/post/*", "/rabbit")
+
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                     .formLogin()
