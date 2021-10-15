@@ -1,4 +1,6 @@
 target/
-.idea
+.idea/
 src/main/resources/db/migration/V2__Add_admin.sql
 src/main/resources/application.properties
+uploads/
+src/test/resources/application-test.properties

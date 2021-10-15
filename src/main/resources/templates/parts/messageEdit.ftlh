@@ -15,7 +15,7 @@
             </div>
             <div class="form-group mb-3">
                 <input type="text" class="form-control"
-                    value="<#if message??>${message.tag}</#if>" name="tag" placeholder="Тэг">
+                    value="<#if message??>${message.tag}</#if>" name="tag" placeholder="Тэг"/>
                 <#if tagError??>
                        <div class="invalid-feedback">
                               ${tagError}
@@ -23,7 +23,7 @@
                 </#if>
             </div>
             <div class="custom-file">
-                <input name="file"  class="form-control" type="file" id="customFile">
+                <input name="file"  class="form-control" type="file" id="customFile"/>
                 <label for="customFile" class="formFile"></label>
             </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
