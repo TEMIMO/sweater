@@ -3,6 +3,9 @@ package com.example.sweater.contoller;
 import com.example.sweater.domain.Message;
 import com.example.sweater.domain.User;
 import com.example.sweater.repos.MessageRepo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -43,7 +46,6 @@ public class MainController {
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model,
                        @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-
         Page<Message> page;
 
         if (filter != null && !filter.isEmpty()) {
@@ -66,7 +68,8 @@ public class MainController {
             @Valid Message message,
             BindingResult bindingResult, // Список аргументов и ошибок валидации, всегда должен идти перед model
             Model model,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ) throws IOException {
 
         message.setAuthor(user);
@@ -79,13 +82,13 @@ public class MainController {
 
             saveFile(message, file);
             model.addAttribute("message", null);
-
             messageRepo.save(message);
         }
 
-        Iterable<Message> messages = messageRepo.findAll();
+        Page<Message> page = messageRepo.findAll(pageable);
 
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
 
         return "main";
     }
@@ -112,17 +115,20 @@ public class MainController {
             @AuthenticationPrincipal User currentUser,
             @PathVariable User user,
             Model model,
-            @RequestParam(required = false) Message message
+            @RequestParam(required = false) Message message,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
     ){
-        Set<Message> messages = user.getMessages();
 
+        Page<Message> page = messageRepo.findAllByAuthorId(user.getId(), pageable);
+
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/user-messages/" + user.getId().toString());
         model.addAttribute("userChannel", user);
-        model.addAttribute("messages", messages);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
         model.addAttribute("subscribersCount", user.getSubscribers().size());
-        model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
+        model.addAttribute("message", message);
 
         return "userMessages";
     }
@@ -131,11 +137,17 @@ public class MainController {
     public String updateMessage(
             @AuthenticationPrincipal User currentUser,
             @PathVariable Long user,
-            @RequestParam("id") Message message,
+            Message message,
+            @RequestParam("id") String id,
             @RequestParam("text") String text,
             @RequestParam("tag") String tag,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
+
+        Logger logger = LoggerFactory.getLogger(MainController.class);
+        logger.info(message.toString());
+        logger.info(text);
+
         if (message.getAuthor().equals(currentUser)){
             if (!StringUtils.isEmpty(text)){
                 message.setText(text);

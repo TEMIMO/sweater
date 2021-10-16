@@ -27,8 +27,8 @@ public class RabbitController  {
     @PostMapping
     public ResponseEntity<String> checkRabbit(@RequestBody Map<String, String> message){
         logger.info("Emit to myQueue");
-        Gson gson = new Gson();
-        String json = gson.toJson(message);
+        Gson gson = new Gson();//can delete
+        String json = gson.toJson(message);//
         template.setExchange("direct-exchange");
         template.convertAndSend(message.get("key"), json);
         return ResponseEntity.ok("Success emit to myQueue");

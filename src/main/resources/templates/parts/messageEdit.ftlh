@@ -27,7 +27,9 @@
                 <label for="customFile" class="formFile"></label>
             </div>
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <input type="hidden" name="id" value="<#if message??>${message.id}</#if>" />
+            <label>
+                <input type="hidden" name="id" value="<#if message??>${message.id} </#if>" />
+            </label>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">Save message</button>
             </div>

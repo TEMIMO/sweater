@@ -10,7 +10,7 @@ import javax.validation.constraints.NotBlank;
 // Пакет домен для того, чтобы не искать сущности по всему исходному коду
 
 @Entity // Сущность, которую нам необходимо сохранять в базе данных
-@Table(name ="message", schema = "PUBLIC")
+@Table(name ="message")
 public class Message {
     @Id // Создаем первичный ключ
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "native") // Чтобы идентификаторы генерировались
