@@ -1,2 +1,2 @@
 # sweater
-Just Spring App 
+Spring App that imitates Twitter
