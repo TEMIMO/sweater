@@ -1,2 +1,2 @@
 # sweater
-Spring App that imitates Twitter
+Spring Boot MVC App that imitates Twitter
