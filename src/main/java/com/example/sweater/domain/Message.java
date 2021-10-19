@@ -1,11 +1,14 @@
 package com.example.sweater.domain;
 
+import com.example.sweater.domain.util.MessageHelper;
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
+import java.util.Set;
 
 // Пакет домен для того, чтобы не искать сущности по всему исходному коду
 
@@ -29,6 +32,22 @@ public class Message {
 
     private String filename;
 
+    @ManyToMany
+    @JoinTable(
+            name = "message_likes",
+            joinColumns = {@JoinColumn(name = "message_id")},
+            inverseJoinColumns = {@JoinColumn(name = "user_id")}
+    )
+    private Set<User> likes = new HashSet<>();
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
+    }
+
     public Message(){
     }
 
@@ -39,7 +58,7 @@ public class Message {
     }
 
     public String getAuthorName(){      // Чтобы взять имя автора, main.ftlh обращается именно сюда
-        return author != null ? author.getUsername() : "<none>" ;
+        return MessageHelper.getAuthorName(author);
     }
     // До этого добавляли без автора, поэтому чтобы не было ошибок, будем проверять
 
