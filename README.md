@@ -1,2 +1,2 @@
 # sweater
-Just Spring App 
+Spring Boot MVC App that imitates Twitter
