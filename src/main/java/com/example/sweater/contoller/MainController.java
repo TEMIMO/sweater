@@ -40,7 +40,7 @@ public class MainController {
     @Autowired
     private MessageService messageService;
 
-    @Value("${upload.path}") // Ищет в properties upload.path и вставляет в переменную
+    @Value("${upload.path}")
     private String uploadPath;
 
     @GetMapping("/")
